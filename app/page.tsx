@@ -112,7 +112,7 @@ export default function Home() {
         className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-gray-50 to-gray-100"
       >
         <div className="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-6 sm:mb-8 pt-16 sm:pt-20 md:pt-24">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
               Building with
               <span className="block text-gray-600 mt-2 sm:mt-4">Intention</span>
