@@ -2,9 +2,15 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { useScrollAnimation } from './hooks/useScrollAnimation'
+import { AnimatedSection } from './components/AnimatedSection'
 
 export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  
+  // Define section IDs for scroll animation
+  const sectionIds = ['hero', 'services', 'about', 'contact']
+  const { activeSection, isSectionActive, getSectionVisibility } = useScrollAnimation(sectionIds)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -58,7 +64,12 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <AnimatedSection 
+        id="hero"
+        isActive={isSectionActive('hero')}
+        visibilityRatio={getSectionVisibility('hero')}
+        className="pt-32 pb-20 px-4 sm:px-6 lg:px-8"
+      >
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
             Building with
@@ -84,10 +95,15 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+      <AnimatedSection 
+        id="services"
+        isActive={isSectionActive('services')}
+        visibilityRatio={getSectionVisibility('services')}
+        className="py-24 bg-gradient-to-br from-gray-50 to-gray-100"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-5xl font-bold text-gray-900 mb-6">Our Services</h2>
@@ -136,10 +152,15 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* About Section */}
-      <section id="about" className="py-20">
+      <AnimatedSection 
+        id="about"
+        isActive={isSectionActive('about')}
+        visibilityRatio={getSectionVisibility('about')}
+        className="py-20"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -189,10 +210,15 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
+      <AnimatedSection 
+        id="contact"
+        isActive={isSectionActive('contact')}
+        visibilityRatio={getSectionVisibility('contact')}
+        className="py-20 bg-gray-50"
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
@@ -306,7 +332,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
