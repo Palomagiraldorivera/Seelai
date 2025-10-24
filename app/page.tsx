@@ -158,7 +158,7 @@ export default function Home() {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h3>
-              <form className="space-y-6">
+              <form action="https://formspree.io/f/xzzjlpew" method="POST" className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Name
@@ -167,6 +167,7 @@ export default function Home() {
                     type="text"
                     id="name"
                     name="name"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                     placeholder="Your name"
                   />
@@ -179,6 +180,7 @@ export default function Home() {
                     type="email"
                     id="email"
                     name="email"
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                     placeholder="your@email.com"
                   />
@@ -191,6 +193,7 @@ export default function Home() {
                     id="message"
                     name="message"
                     rows={4}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                     placeholder="Tell us about your project..."
                   ></textarea>
