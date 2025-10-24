@@ -12,6 +12,25 @@ export default function Home() {
   const sectionIds = ['hero', 'services', 'about', 'contact']
   const { activeSection, isSectionActive, getSectionVisibility } = useScrollAnimation(sectionIds)
 
+  // Smooth scroll to section with proper centering
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const headerHeight = 80 // Approximate header height
+      const elementTop = element.offsetTop - headerHeight
+      const windowHeight = window.innerHeight
+      const elementHeight = element.offsetHeight
+      
+      // Calculate scroll position to center the section
+      const scrollPosition = elementTop - (windowHeight - elementHeight) / 2
+      
+      window.scrollTo({
+        top: Math.max(0, scrollPosition),
+        behavior: 'smooth'
+      })
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
@@ -55,9 +74,24 @@ export default function Home() {
               </a>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#services" className="text-gray-600 hover:text-gray-900 transition-colors">Services</a>
-              <a href="#about" className="text-gray-600 hover:text-gray-900 transition-colors">About</a>
-              <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+              <button 
+                onClick={() => scrollToSection('services')} 
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Services
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')} 
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Contact
+              </button>
             </nav>
           </div>
         </div>
@@ -68,31 +102,46 @@ export default function Home() {
         id="hero"
         isActive={isSectionActive('hero')}
         visibilityRatio={getSectionVisibility('hero')}
-        className="pt-32 pb-20 px-4 sm:px-6 lg:px-8"
+        className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-gray-50 to-gray-100"
       >
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-            Building with
-            <span className="block text-gray-600">Intention</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto">
-            We design and implement AI agents for any use case: customer service, 
-            automation, analysis, or internal support. Our goal is to integrate AI 
-            naturally into your processes, regardless of industry or area.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="#contact" 
-              className="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+          <div className="mb-8">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-gray-900 mb-8 leading-tight">
+              Building with
+              <span className="block text-gray-600 mt-4">Intention</span>
+            </h1>
+          </div>
+          
+          <div className="mb-12">
+            <p className="text-2xl md:text-3xl lg:text-4xl text-gray-600 mb-6 max-w-5xl mx-auto leading-relaxed font-light">
+              We design and implement AI agents for any use case: customer service, 
+              automation, analysis, or internal support.
+            </p>
+            <p className="text-xl md:text-2xl text-gray-500 max-w-4xl mx-auto leading-relaxed">
+              Our goal is to integrate AI naturally into your processes, regardless of industry or area.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="bg-gray-900 text-white px-10 py-5 rounded-xl font-semibold text-lg hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Get Started
-            </a>
-            <a 
-              href="#services" 
-              className="border border-gray-300 text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+            </button>
+            <button 
+              onClick={() => scrollToSection('services')}
+              className="border-2 border-gray-300 text-gray-900 px-10 py-5 rounded-xl font-semibold text-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 hover:scale-105"
             >
               Learn More
-            </a>
+            </button>
+          </div>
+          
+          {/* Scroll indicator */}
+          <div className="mt-16 animate-bounce">
+            <svg className="w-6 h-6 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
         </div>
       </AnimatedSection>
@@ -102,7 +151,7 @@ export default function Home() {
         id="services"
         isActive={isSectionActive('services')}
         visibilityRatio={getSectionVisibility('services')}
-        className="py-24 bg-gradient-to-br from-gray-50 to-gray-100"
+        className="flex items-center justify-center min-h-screen py-24 bg-gradient-to-br from-gray-50 to-gray-100"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
@@ -159,7 +208,7 @@ export default function Home() {
         id="about"
         isActive={isSectionActive('about')}
         visibilityRatio={getSectionVisibility('about')}
-        className="py-20"
+        className="flex items-center justify-center min-h-screen py-20"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -217,7 +266,7 @@ export default function Home() {
         id="contact"
         isActive={isSectionActive('contact')}
         visibilityRatio={getSectionVisibility('contact')}
-        className="py-20 bg-gray-50"
+        className="flex items-center justify-center min-h-screen py-20 bg-gray-50"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
