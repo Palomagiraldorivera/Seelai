@@ -1,6 +1,36 @@
+'use client'
+
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function Home() {
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xzzjlpew', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        setIsSubmitted(true)
+        form.reset()
+      } else {
+        throw new Error('Error al enviar el formulario')
+      }
+    } catch (error) {
+      alert('Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.')
+    }
+  }
   return (
     <main className="min-h-screen bg-white">
       {/* Header */}
@@ -158,7 +188,25 @@ export default function Home() {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h3>
-              <form action="https://formspree.io/f/xzzjlpew" method="POST" className="space-y-6">
+              
+              {isSubmitted ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 mb-2">¡Mensaje enviado!</h4>
+                  <p className="text-gray-600 mb-4">Gracias por contactarnos. Te responderemos pronto.</p>
+                  <button 
+                    onClick={() => setIsSubmitted(false)}
+                    className="text-gray-900 hover:text-gray-700 underline"
+                  >
+                    Enviar otro mensaje
+                  </button>
+                </div>
+              ) : (
+                <form action="https://formspree.io/f/xzzjlpew" method="POST" className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Name
@@ -205,6 +253,7 @@ export default function Home() {
                   Send Message
                 </button>
               </form>
+              )}
             </div>
             
             {/* Contact Info */}
